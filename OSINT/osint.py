@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from pyhunter import PyHunter
 from dnsdumpster.DNSDumpsterAPI import DNSDumpsterAPI
-import csv, argparse, validators, requests, shodan, os, time, socket
+import csv, argparse, validators, requests, shodan, os, time, socket, sys
 
 
 print('\n\t'
@@ -23,9 +23,14 @@ def osinter(dom, filetype, auth_key, shodan_api):
 	print("\n-----------------------------------EMAILS-----------------------------------\n")
 	global hunterapi
 	global shodanapi
-
-	hunter = PyHunter(auth_key)
-	shodan_api = shodan.Shodan(shodan_api)
+	try: 
+		hunter = PyHunter(auth_key)
+	except:
+		sys.exit('No Hunter API Key entered.')
+	try:
+		shodan_api = shodan.Shodan(shodan_api)
+	except:
+		sys.exit('No Shodan API Key entered.')
 	if(validators.domain(dom) is True):
 		emails = hunter.domain_search(dom.lower(), limit=100).get('emails')
 		if (filetype.lower() == 'txt'):
@@ -94,7 +99,7 @@ def osinter(dom, filetype, auth_key, shodan_api):
 
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser("python3 osinter.py -d <domain> -o <filetype>")
+	parser = argparse.ArgumentParser("python3 osinter.py -d <domain> -o <filetype> -S <shodan_api> -H <hunterio_api>")
 	parser.add_argument('-d', dest='dom', help='Domain name to search', type=str)
 	parser.add_argument('-o', dest='filetype', help='Output file type [txt/csv]', default='txt', type=str)
 	parser.add_argument('-H', dest='hunterio', help='Hunter.io API Key')
