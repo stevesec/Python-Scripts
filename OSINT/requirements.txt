@@ -1,2 +1,11 @@
 pyhunter
 validators
+dnsdumpster
+csv
+argparse
+validators
+requests
+shodan
+os
+time
+socket
