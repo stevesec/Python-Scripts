@@ -61,15 +61,6 @@ def client_file(inpt):
 		return inpt.strip()
 	except:
 		pass
-	# try: 
-
-								
-		# elif '.csv' in items:
-		# 	
-		# else:
-		# 	return inpt
-
-
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser('Usage: python3 ip_address.py')
