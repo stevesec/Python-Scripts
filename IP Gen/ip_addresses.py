@@ -83,6 +83,8 @@ if __name__ == '__main__':
 					ip = ', '.join(row).strip()
 					clients = client_file(ip)
 					ip_address(clients, args.output)
+		else:
+			ip_address(items,args.output)
 	
 
 	print('\nEnd Program')
