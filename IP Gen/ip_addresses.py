@@ -18,7 +18,12 @@ def ip_address(inpt, to_file):
 		ip = inpt.split('-')
 		ipstart = ip[0]
 		ipend = ip[1]
-		body = 'iprangetype=plain&ipstart={}&ipend={}&ipcidr=&mask=32'.format(ipstart, ipend)
+		if not re.findall( r'[0-9]+(?:\.[0-9]+){3}', ipend):
+			new_ip = ip[0].split('.')[:3]
+			last_ip = ('.'.join(new_ip) + '.' + ipend).strip()
+			body = 'iprangetype=plain&ipstart={}&ipend={}&ipcidr=&mask=32'.format(ipstart, last_ip)
+		else:
+			body = 'iprangetype=plain&ipstart={}&ipend={}&ipcidr=&mask=32'.format(ipstart, ipend)
 
 	else:
 		sys.exit('Usage: python3 ip_address.py')
@@ -34,7 +39,7 @@ def ip_address(inpt, to_file):
 
 	new_ip = '\n'.join(ip)
 
-	if to_file:
+	if to_file != 'stdout':
 		with open(to_file,'a') as file:
 			file.write(new_ip+'\n')
 			file.close()
@@ -61,6 +66,15 @@ def client_file(inpt):
 		return inpt.strip()
 	except:
 		pass
+	# try: 
+
+								
+		# elif '.csv' in items:
+		# 	
+		# else:
+		# 	return inpt
+
+
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser('Usage: python3 ip_address.py')
@@ -84,7 +98,7 @@ if __name__ == '__main__':
 					clients = client_file(ip)
 					ip_address(clients, args.output)
 		else:
-			ip_address(items,args.output)
+			ip_address(items, args.output)
 	
 
 	print('\nEnd Program')
