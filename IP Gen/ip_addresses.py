@@ -34,9 +34,9 @@ def ip_address(inpt, to_file):
 
 	new_ip = '\n'.join(ip)
 
-	if (to_file == True):
-		with open('IP.txt','a') as file:
-			file.write(new_ip)
+	if to_file:
+		with open(to_file,'a') as file:
+			file.write(new_ip+'\n')
 			file.close()
 	else:
 		print(new_ip)
